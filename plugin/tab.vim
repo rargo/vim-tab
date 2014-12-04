@@ -2,12 +2,6 @@
 "intend to maintain different working directory for each tab,
 "auto switch directory when switch tab
 "
-if exists('g:loaded_vim_tab')
-    finish
-endif
-
-let g:loaded_vim_tab = 1
-
 func! TabSwitchToPrevTab()
 	"because tablast not work
 	execute "tabn " . g:PreTabNr
@@ -16,6 +10,11 @@ endfunc
 if !exists("g:TabTrigger")
 	let g:TabTrigger = []
 endif
+
+function! TabEcho()
+
+
+endfunction
 
 "pattern, function
 "dict = {
@@ -61,7 +60,7 @@ function! TabAddTrigger(trigger)
 	call add(g:TabTrigger,newTrigger)
 endfunction
 
-function! TabEnterTrigger(nr)
+function! s:TabEnterTrigger(nr)
 	for t in g:TabTrigger
 		if t.enter_callback != ""
 			"echo "TabEnter execute trigger:" . t.name
@@ -70,7 +69,7 @@ function! TabEnterTrigger(nr)
 	endfor
 endfunction
 
-function! TabLeveaTrigger(nr)
+function! s:TabLeaveTrigger(nr)
 	for t in g:TabTrigger
 		if t.leave_callback != ""
 			"echo "TabLeave execute trigger:" . t.name
@@ -93,12 +92,12 @@ endif
 
 if !exists("s:TabAutocmdLoaded")
 	let s:TabAutocmdLoaded = 1
-	autocmd TabEnter * call TabEnterFunc()
-	autocmd TabLeave * call TabLeaveFunc()
+	autocmd TabEnter * call s:TabEnterFunc()
+	autocmd TabLeave * call s:TabLeaveFunc()
 endif
 
 "if a tab enter, check if some new tab create
-func! TabEnterFunc()
+func! s:TabEnterFunc()
 	"echo "tab enter:" tabpagenr()
 	let TabPages = tabpagenr('$')
 	if g:LastTabPages != TabPages
@@ -141,14 +140,14 @@ func! TabEnterFunc()
 		let tabdir = g:TabDirs[tabpagenr()]
 		exec "silent cd " . tabdir
 	endif
-	call TabEnterTrigger(tabpagenr())
+	call s:TabEnterTrigger(tabpagenr())
 	"echo g:LastTabPages
 	"echo g:TabDirs
 	"call getchar()
 endfunc
 
 "if a tab leave, check if some tab close
-func! TabLeaveFunc()
+func! s:TabLeaveFunc()
 	"remember previous tab nr
 	"echo "tab leave:" tabpagenr()
 	let TabPages = tabpagenr('$')
@@ -162,7 +161,7 @@ func! TabLeaveFunc()
 		let g:TabDirs[nr] = getcwd() "save dir
 	endif
 	let g:PreTabNr = nr
-	call TabLeveaTrigger(tabpagenr())
+	call s:TabLeaveTrigger(tabpagenr())
 	"echo g:LastTabPages
 	"echo g:TabDirs
 	"call getchar()
@@ -183,7 +182,7 @@ set tabline&
 set tabline=%!TabMyTabLine()
 hi TabLineSel term=standout ctermfg=60 guibg=Red guifg=White
 hi TabLine term=standout ctermfg=grey guibg=Red guifg=White
-function! TabMyTabLabel(n)
+function! s:TabMyTabLabel(n)
 	let buflist = tabpagebuflist(a:n)
 	let winnr = tabpagewinnr(a:n)
 	let bufname = bufname(buflist[winnr - 1])
@@ -214,10 +213,10 @@ function! TabMyTabLine()
 			let s .= '%#TabLineSel#'
 			" the label is made by MyTabLabel()
 			"let s .= ' ' . '#' . (i+1) . ' %{MyTabLabel(' . (i + 1) . ')} '
-			let s .= ' ' . '*' . (i+1) . '*' . ' %{TabMyTabLabel(' . (i + 1) . ')} ' . '[' . s:GetLastDir(getcwd()) . ']'
+			let s .= ' ' . '*' . (i+1) . '*' . ' %{s:TabMyTabLabel(' . (i + 1) . ')} ' . '[' . s:GetLastDir(getcwd()) . ']'
 		else
 			let s .= '%#TabLine#'
-			let s .= ' ' . '*' . (i+1) . '*' . ' %{TabMyTabLabel(' . (i + 1) . ')} ' . '[' . s:GetLastDir(s:TabGetDir(i+1)) . ']'
+			let s .= ' ' . '*' . (i+1) . '*' . ' %{s:TabMyTabLabel(' . (i + 1) . ')} ' . '[' . s:GetLastDir(s:TabGetDir(i+1)) . ']'
 		endif
 	endfor
 	return s
