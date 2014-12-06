@@ -7,15 +7,6 @@ func! TabSwitchToPrevTab()
 	execute "tabn " . g:PreTabNr
 endfunc
 
-if !exists("g:TabTrigger")
-	let g:TabTrigger = []
-endif
-
-function! TabEcho()
-
-
-endfunction
-
 "pattern, function
 "dict = {
 "	'name':'name',
@@ -23,42 +14,6 @@ endfunction
 "	'enter_callback':"enter_function",
 "	'leave_callback':"leave_function" 
 "	}
-function! TabAddTrigger(trigger)
-	let newTrigger = copy(a:trigger)
-	if has_key(newTrigger,'name')
-		let newTrigger.name = a:trigger['name']
-	else
-		echo "TabAddTrigger:error trigger"
-		return
-	endif
-
-	for t in g:TabTrigger
-		if t.name == a:trigger['name']
-			echo "TabAddTrigger:trigger " . t.name . " already exists"
-			return
-		endif
-	endfor
-
-	if has_key(newTrigger,'pattern')
-		let newTrigger.pattern = a:trigger['pattern']
-	else
-		let newTrigger.pattern = ""
-	endif
-
-	if has_key(newTrigger,'enter_callback')
-		let newTrigger.enter_callback = a:trigger['enter_callback']
-	else
-		let newTrigger.enter_callback = ""
-	endif
-
-	if has_key(newTrigger,'leave_callback')
-		let newTrigger.leave_callback = a:trigger['leave_callback']
-	else
-		let newTrigger.leave_callback = ""
-	endif
-
-	call add(g:TabTrigger,newTrigger)
-endfunction
 
 function! s:TabEnterTrigger(nr)
 	for t in g:TabTrigger
@@ -92,18 +47,18 @@ endif
 
 if !exists("s:TabAutocmdLoaded")
 	let s:TabAutocmdLoaded = 1
-	autocmd TabEnter * call s:TabEnterFunc()
-	autocmd TabLeave * call s:TabLeaveFunc()
+	autocmd TabEnter * call TabEnterFunc()
+	autocmd TabLeave * call TabLeaveFunc()
 endif
 
 "if a tab enter, check if some new tab create
-func! s:TabEnterFunc()
+func! TabEnterFunc()
 	"echo "tab enter:" tabpagenr()
 	let TabPages = tabpagenr('$')
 	if g:LastTabPages != TabPages
 		if g:LastTabPages < TabPages
 			if TabPages >= 9
-				"echo "don't support more than 9 tabs"
+				echo "tab.vim don't support more than 9 tabs"
 				return
 			endif
 			"echo "one page add"
@@ -140,14 +95,15 @@ func! s:TabEnterFunc()
 		let tabdir = g:TabDirs[tabpagenr()]
 		exec "silent cd " . tabdir
 	endif
-	call s:TabEnterTrigger(tabpagenr())
+	let nr = tabpagenr()
+	call s:TabEnterTrigger(nr)
 	"echo g:LastTabPages
 	"echo g:TabDirs
 	"call getchar()
 endfunc
 
 "if a tab leave, check if some tab close
-func! s:TabLeaveFunc()
+func! TabLeaveFunc()
 	"remember previous tab nr
 	"echo "tab leave:" tabpagenr()
 	let TabPages = tabpagenr('$')
@@ -161,7 +117,8 @@ func! s:TabLeaveFunc()
 		let g:TabDirs[nr] = getcwd() "save dir
 	endif
 	let g:PreTabNr = nr
-	call s:TabLeaveTrigger(tabpagenr())
+	let nr = tabpagenr()
+	call s:TabLeaveTrigger(nr)
 	"echo g:LastTabPages
 	"echo g:TabDirs
 	"call getchar()
@@ -182,7 +139,7 @@ set tabline&
 set tabline=%!TabMyTabLine()
 hi TabLineSel term=standout ctermfg=60 guibg=Red guifg=White
 hi TabLine term=standout ctermfg=grey guibg=Red guifg=White
-function! s:TabMyTabLabel(n)
+function! TabMyTabLabel(n)
 	let buflist = tabpagebuflist(a:n)
 	let winnr = tabpagewinnr(a:n)
 	let bufname = bufname(buflist[winnr - 1])
@@ -213,10 +170,10 @@ function! TabMyTabLine()
 			let s .= '%#TabLineSel#'
 			" the label is made by MyTabLabel()
 			"let s .= ' ' . '#' . (i+1) . ' %{MyTabLabel(' . (i + 1) . ')} '
-			let s .= ' ' . '*' . (i+1) . '*' . ' %{s:TabMyTabLabel(' . (i + 1) . ')} ' . '[' . s:GetLastDir(getcwd()) . ']'
+			let s .= ' ' . '*' . (i+1) . '*' . ' %{TabMyTabLabel(' . (i + 1) . ')} ' . '[' . s:GetLastDir(getcwd()) . ']'
 		else
 			let s .= '%#TabLine#'
-			let s .= ' ' . '*' . (i+1) . '*' . ' %{s:TabMyTabLabel(' . (i + 1) . ')} ' . '[' . s:GetLastDir(s:TabGetDir(i+1)) . ']'
+			let s .= ' ' . '*' . (i+1) . '*' . ' %{TabMyTabLabel(' . (i + 1) . ')} ' . '[' . s:GetLastDir(s:TabGetDir(i+1)) . ']'
 		endif
 	endfor
 	return s
