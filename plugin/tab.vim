@@ -15,7 +15,7 @@ endfunc
 "	'leave_callback':"leave_function" 
 "	}
 
-function! s:TabEnterTrigger(nr)
+function! s:TabCallEnterTrigger(nr)
 	for t in g:TabTrigger
 		if t.enter_callback != ""
 			"echo "TabEnter execute trigger:" . t.name
@@ -24,7 +24,7 @@ function! s:TabEnterTrigger(nr)
 	endfor
 endfunction
 
-function! s:TabLeaveTrigger(nr)
+function! s:TabCallLeaveTrigger(nr)
 	for t in g:TabTrigger
 		if t.leave_callback != ""
 			"echo "TabLeave execute trigger:" . t.name
@@ -47,12 +47,12 @@ endif
 
 if !exists("s:TabAutocmdLoaded")
 	let s:TabAutocmdLoaded = 1
-	autocmd TabEnter * call TabEnterFunc()
-	autocmd TabLeave * call TabLeaveFunc()
+	autocmd TabEnter * call s:TabCallEnterFunc()
+	autocmd TabLeave * call s:TabCallLeaveFunc()
 endif
 
 "if a tab enter, check if some new tab create
-func! TabEnterFunc()
+func! s:TabCallEnterFunc()
 	"echo "tab enter:" tabpagenr()
 	let TabPages = tabpagenr('$')
 	if g:LastTabPages != TabPages
@@ -96,14 +96,14 @@ func! TabEnterFunc()
 		exec "silent cd " . tabdir
 	endif
 	let nr = tabpagenr()
-	call s:TabEnterTrigger(nr)
+	call s:TabCallEnterTrigger(nr)
 	"echo g:LastTabPages
 	"echo g:TabDirs
 	"call getchar()
 endfunc
 
 "if a tab leave, check if some tab close
-func! TabLeaveFunc()
+func! s:TabCallLeaveFunc()
 	"remember previous tab nr
 	"echo "tab leave:" tabpagenr()
 	let TabPages = tabpagenr('$')
@@ -118,7 +118,7 @@ func! TabLeaveFunc()
 	endif
 	let g:PreTabNr = nr
 	let nr = tabpagenr()
-	call s:TabLeaveTrigger(nr)
+	call s:TabCallLeaveTrigger(nr)
 	"echo g:LastTabPages
 	"echo g:TabDirs
 	"call getchar()

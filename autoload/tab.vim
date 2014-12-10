@@ -3,9 +3,12 @@ if !exists("g:TabTrigger")
 	let g:TabTrigger = []
 endif
 
-function! tab#TabEcho()
-
-
+function! tab#TabShowTrigger()
+	let i = 1
+	for t in g:TabTrigger
+		echo "tab trigger " . i . "---> name:" . t.name . " enter_callback:" . t.enter_callback . " leave_callback:" . t.leave_callback
+		let i = i+1
+	endfor
 endfunction
 
 function! tab#TabAddTrigger(trigger)
