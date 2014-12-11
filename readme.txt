@@ -42,7 +42,8 @@ let g:TabTagTrigger = {'name':'TabTagTriger','pattern':"pattern", 'enter_callbac
 call tab#TabAddTrigger(g:TabTagTrigger)
 
 "NOTE:following key map for is move between tabs
-"please define the keys you like
+"please define the keys you like,all keys are alt+*
+"input by c-v alt-*
 nnoremap 1 :tabn 1<cr>
 nnoremap 2 :tabn 2<cr>
 nnoremap 3 :tabn 3<cr>
