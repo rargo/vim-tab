@@ -1,4 +1,3 @@
-
 if !exists("g:TabTrigger")
 	let g:TabTrigger = []
 endif
