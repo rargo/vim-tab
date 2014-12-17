@@ -1,16 +1,20 @@
-I am an embedded engineer working on android platform,
-and android is such a huge system, use global and ctags encounter vary 
+I am an embedded engineer working on Android platform,
+and Android is such a huge system, use global and ctags encounter vary 
 problems, like tag is too big, too slow to jump, global can't generate
 such big tag.
 
 I have try tmux, but find out it doesn't meet my requirement,
 such as share clipboard easily, search easily.
-So I written this plugin for maintain each tab different directory,
-and switch directory automatically when switch tab,
+So I written this plugin for maintain each tab different working directory,
+and switch working directory automatically when switch tab,
 and can also do custom actions when switch tab,like
-auto reload tags in the new directory, and some other plugin 
+auto reload tags in the new working directory, and some other plugin 
 would also benefit from this plugin,like commandt, grep, working in a 
 sub directory is so mush fast and easy.
+
+Big notes:
+	Press 't' in NERDTree directory node will open the directory in a new tab, 
+such a wonderful thing use with this plugin
 
 try add the following code in your vimrc:
 
