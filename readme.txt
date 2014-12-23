@@ -12,13 +12,19 @@ auto reload tags in the new working directory, and some other plugin
 would also benefit from this plugin,like commandt, grep, working in a 
 sub directory is so mush fast and easy.
 
-Big notes:
-	Press 't' in NERDTree directory node will open the directory in a new tab, 
-such a wonderful thing use with this plugin
+Notes:
+	1.Press 't' in NERDTree directory node will open the directory 
+in a new tab, such a wonderful thing use with this plugin
+	2.when first open a tab, the tab enter trigger will not be called,
+the following code can be add to your .vimrc(according to your 
+project file), load tags automatically when open a file
+	autocmd BufEnter *.[ch] call TabReloadCGtag()
+	autocmd BufEnter *.cpp call TabReloadCGtag()
+	autocmd BufEnter *.java call TabReloadCGtag()
 
-try add the following code in your vimrc:
+Try add the following code in your vimrc:
 
-"reload GTAG, ctags.
+"reload GTAGS, ctags.
 function! TabReloadCGtag()
 	"reload GTAGS in current directory
 	cs kill 0
