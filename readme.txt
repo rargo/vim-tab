@@ -24,7 +24,7 @@ project file), load tags automatically when open a file
 	autocmd BufEnter *.java call TabReloadCGtag()
 	3. There's a bug I cann't fix:
 	if a file already open in one tab, open it in another tab will lost the 
-	tab's save directorys, please avoid the operation
+	tab's save directorys, please such operation
 
 Try add the following code in your vimrc:
 
