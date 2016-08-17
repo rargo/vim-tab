@@ -13,7 +13,8 @@ would also benefit from this plugin,like commandt, grep, working in a
 sub directory is so mush fast and easy.
 
 Notes:
-	1.Press 't' in NERDTree directory node will open the directory 
+	1.set option "let g:NERDTreeChDirMode=2" in your vimrc,
+	Press 't' in NERDTree directory node will open the directory 
 in a new tab, such a wonderful thing use with this plugin
 	2.when first open a tab, the tab enter trigger will not be called,
 the following code can be add to your .vimrc(according to your 
@@ -21,6 +22,9 @@ project file), load tags automatically when open a file
 	autocmd BufEnter *.[ch] call TabReloadCGtag()
 	autocmd BufEnter *.cpp call TabReloadCGtag()
 	autocmd BufEnter *.java call TabReloadCGtag()
+	3. There's a bug I cann't fix:
+	if a file already open in one tab, open it in another tab will lost the 
+	tab's save directorys, please avoid the operation
 
 Try add the following code in your vimrc:
 
