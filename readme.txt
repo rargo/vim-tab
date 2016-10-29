@@ -54,16 +54,7 @@ call tab#TabAddTrigger(g:TabTagTrigger)
 "NOTE:following key map for is move between tabs
 "please define the keys you like,all keys are alt+*
 "input by c-v alt-*
-nnoremap 1 :tabn 1<cr>
-nnoremap 2 :tabn 2<cr>
-nnoremap 3 :tabn 3<cr>
-nnoremap 4 :tabn 4<cr>
-nnoremap 5 :tabn 5<cr>
-nnoremap 6 :tabn 6<cr>
-nnoremap 7 :tabn 7<cr>
-nnoremap 8 :tabn 8<cr>
-nnoremap 9 :tabn 9<cr>
-nnoremap q :call SwitchToPrevTab()<cr>
-nnoremap e gT<cr>
-nnoremap r gt<cr>
-nnoremap c :tabclose<cr>
+nnoremap w :tabnext <cr>
+nnoremap q :tabprevious <cr>
+nnoremap a :call SwitchToPrevTab()<cr>
+

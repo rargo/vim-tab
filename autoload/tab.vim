@@ -19,11 +19,15 @@ function! tab#TabAddTrigger(trigger)
 		return
 	endif
 
+	let i = 0
 	for t in g:TabTrigger
 		if t.name == a:trigger['name']
-			echo "TabAddTrigger:trigger " . t.name . " already exists"
-			return
+			"echo "TabAddTrigger:trigger " . t.name . " already exists" . " remove the old one"
+			"echom "TabAddTrigger:trigger " . t.name . " already exists" . " remove the old one"
+			call remove(g:TabTrigger,i)
+			break
 		endif
+		let i = i + 1
 	endfor
 
 	if has_key(newTrigger,'pattern')

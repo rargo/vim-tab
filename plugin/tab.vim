@@ -2,6 +2,14 @@
 "intend to maintain different working directory for each tab,
 "auto switch directory when switch tab
 "
+"TODO 
+"1. tab buffer list: list tab buffers
+"2. add CMD to open dir/file in a new tab
+"3. switch between tab more easy
+"4. tab list
+"5. consider add tab mark and key shortcut in vim-line-jump
+"6. jumplist in vim-line-jump
+"
 func! TabSwitchToPrevTab()
 	"because tablast not work
 	execute "tabn " . g:PreTabNr
@@ -65,6 +73,7 @@ func! s:TabCallEnterFunc()
 			let nr = tabpagenr()
 			if g:TabDirs[nr] != ""
 				"echo "page nr dir not empty"
+				"echo "tab create in the middle"
 				let saveTabDirs = g:TabDirs[:]
 				let g:TabDirs[nr] = getcwd()
 				let g:TabDirs[nr+1 : ] = saveTabDirs[nr : ]
@@ -83,6 +92,7 @@ func! s:TabCallEnterFunc()
 				let g:TabDirs[nr] = ""
 			else
 				"echo "not the last page close"
+				"echo "middle tab close"
 				let saveTabDirs = g:TabDirs[:]
 				let g:TabDirs[nr : TabPages] = saveTabDirs[nr+1 : TabPages+1]
 				let g:TabDirs[TabPages+1] = ""
