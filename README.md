@@ -4,17 +4,17 @@ I am an embedded engineer working on Android platform, and Android is such a hug
 I have try tmux, but find out it doesn't meet my requirement,such as share clipboard easily, search easily.
 So I written this plugin for maintain each tab different working directory.
 
-**vim-tab** maintains different working directory in each tab page, automatic switch working directory when switch tab,and can also do custom actions,like auto reload tags in the new working directory, and some other plugin would also benefit from this plugin or commands,like Command-T, grep, working in a sub directory is so mush faster and easier.
+**vim-tab** maintains different working directory in each tab page, automatic switch working directory when switch tab,and can also do custom actions when switch tab,like auto reload tags in the new working directory. Some other plugin or vim commands would also benefit from this plugin,like Command-T, grep, working in a sub directory is so mush faster and easier.
 
 ### Demo
 ![](assets/vim-tab.gif)
 
 ### .vimrc setting
 	"set follow option  in your vimrc,Press 't' in NERDTree directory node will open the directory in a new tab,
-	"and will also sets vim working directory to the directory node
+	"and will also sets VIM working directory to that directory node
 	let g:NERDTreeChDirMode=2
 
-	"reload GTAGS, ctags demo code.
+	"below is reload GTAGS, ctags demo code.
 	function! TabReloadCGtag()
 		"reload GTAGS in current directory
 		cs kill 0
@@ -42,7 +42,10 @@ So I written this plugin for maintain each tab different working directory.
 	"call tab#TabShowTrigger()
 	call tab#TabAddTrigger(g:TabTagTrigger)
 
-
+	"when first open a tab, the tab enter trigger will not be called,the following code load tags automatically when open a file
+	autocmd BufEnter *.[ch] call TabReloadCGtag()
+	autocmd BufEnter *.cpp call TabReloadCGtag()
+	autocmd BufEnter *.java call TabReloadCGtag()
 
 ### Notes
 1.you can use following key mapping to move between tabs
@@ -52,14 +55,8 @@ So I written this plugin for maintain each tab different working directory.
 	nnoremap q :tabprevious <cr>
 	nnoremap a :call SwitchToPrevTab()<cr>
 
-2.when first open a tab, the tab enter trigger will not be called,the following code can be add to your .vimrc(according to your project file), load tags automatically when open a file
-
-	autocmd BufEnter *.[ch] call TabReloadCGtag()
-	autocmd BufEnter *.cpp call TabReloadCGtag()
-	autocmd BufEnter *.java call TabReloadCGtag()
-
-3.The offical version nerdtree has a bug that cann't reflect the new directory content after tab create by press 't', personally I keep
+2.The offical version nerdtree has a bug that cann't reflect the new directory content after tab create by press 't', personally I keep
 the old version [old nerdtree](https://github.com/rargo/nerdtree) 
 
-4.There's a bug I cann't fix:
+3.There's a bug I cann't fix:
 if a file already open in one tab, open it in another tab will lost the tab's save directorys, please avoid such operation
