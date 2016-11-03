@@ -53,7 +53,7 @@ So I written this plugin for maintain each tab different working directory.
 	"all keys are alt+*, input by c-v alt-* in VIM insert mode
 	nnoremap w :tabnext <cr>
 	nnoremap q :tabprevious <cr>
-	nnoremap a :call SwitchToPrevTab()<cr>
+	nnoremap a :call TabSwitchToPrevTab()<cr>
 
 2.The offical version nerdtree has a bug that cann't reflect the new directory content after tab create by press 't', personally I keep
 the old version [old nerdtree](https://github.com/rargo/nerdtree) 
