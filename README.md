@@ -52,8 +52,5 @@ after switch tab,like auto reload tags in the new working directory. Some other 
 	nnoremap q :tabprevious <cr>
 	nnoremap a :call TabSwitchToPrevTab()<cr>
 
-2.The offical version nerdtree has a bug that cann't reflect the new directory content after tab create by press 't', personally I keep
-the old version [old nerdtree](https://github.com/rargo/nerdtree) 
-
-3.There's a bug I cann't fix:
+2.There's a bug I cann't fix:
 if a file already open in one tab, open it in another tab will lost the tab's save directorys, please avoid such operation
