@@ -1,10 +1,7 @@
 ### About
-I am an embedded engineer working on Android platform, and Android is such a huge system, use global and ctags encounter vary problems, like tag is too big, too slow to jump, global can't generate such big tag.
 
-I have try tmux, but find out it doesn't meet my requirement,such as share clipboard easily, search easily.
-So I written this plugin for maintain each tab different working directory.
-
-**vim-tab** maintains different working directory in each tab page, automatic switch working directory when switch tab,and can also do custom actions when switch tab,like auto reload tags in the new working directory. Some other plugin or vim commands would also benefit from this plugin,like Command-T, grep, working in a sub directory is so mush faster and easier.
+**vim-tab** maintains different working directory in each tab page, automatic switch working directory when switch tab,and can also do custom actions 
+after switch tab,like auto reload tags in the new working directory. Some other plugin or vim commands would also benefit from this plugin,like Command-T, grep, working in a sub directory is so mush faster and easier.
 
 ### Demo
 ![](assets/vim-tab.gif)
