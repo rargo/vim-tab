@@ -1,10 +1,7 @@
 ### About
-I am an embedded engineer working on Android platform, and Android is such a huge system, use global and ctags encounter vary problems, like tag is too big, too slow to jump, global can't generate such big tag.
 
-I have try tmux, but find out it doesn't meet my requirement,such as share clipboard easily, search easily.
-So I written this plugin for maintain each tab different working directory.
-
-**vim-tab** maintains different working directory in each tab page, automatic switch working directory when switch tab,and can also do custom actions when switch tab,like auto reload tags in the new working directory. Some other plugin or vim commands would also benefit from this plugin,like Command-T, grep, working in a sub directory is so mush faster and easier.
+**vim-tab** maintains different working directory in each tab page, automatic switch working directory when switch tab,and can also do custom actions 
+after switch tab,like auto reload tags in the new working directory. Some other plugin or vim commands would also benefit from this plugin,like Command-T, grep, working in a sub directory is so mush faster and easier.
 
 ### Demo
 ![](assets/vim-tab.gif)
@@ -55,8 +52,5 @@ So I written this plugin for maintain each tab different working directory.
 	nnoremap q :tabprevious <cr>
 	nnoremap a :call TabSwitchToPrevTab()<cr>
 
-2.The offical version nerdtree has a bug that cann't reflect the new directory content after tab create by press 't', personally I keep
-the old version [old nerdtree](https://github.com/rargo/nerdtree) 
-
-3.There's a bug I cann't fix:
+2.There's a bug I cann't fix:
 if a file already open in one tab, open it in another tab will lost the tab's save directorys, please avoid such operation
