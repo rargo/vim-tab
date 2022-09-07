@@ -180,10 +180,10 @@ function! TabMyTabLine()
 			let s .= '%#TabLineSel#'
 			" the label is made by MyTabLabel()
 			"let s .= ' ' . '#' . (i+1) . ' %{MyTabLabel(' . (i + 1) . ')} '
-			let s .= ' ' . '*' . (i+1) . '*' . ' %{TabMyTabLabel(' . (i + 1) . ')} ' . '[' . s:GetLastDir(getcwd()) . ']'
+			let s .= ' ' . '#' . (i+1)  . ' [' . s:GetLastDir(getcwd()) . ']' .  ' %{TabMyTabLabel(' . (i + 1) . ')} '
 		else
 			let s .= '%#TabLine#'
-			let s .= ' ' . '*' . (i+1) . '*' . ' %{TabMyTabLabel(' . (i + 1) . ')} ' . '[' . s:GetLastDir(s:TabGetDir(i+1)) . ']'
+			let s .= ' ' . '*' . (i+1) . ' [' . s:GetLastDir(s:TabGetDir(i+1)) . ']' .  ' %{TabMyTabLabel(' . (i + 1) . ')} '
 		endif
 	endfor
 	return s
